@@ -4,6 +4,7 @@ import sys
 
 import json
 import os
+from pathlib import Path
 
 import ldap
 from django_auth_ldap.config import LDAPSearch
@@ -24,6 +25,9 @@ def get_from_env(var, default):
         return default
 
 DEBUG = (get_from_env('DEBUG', '1') == '1')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # add admins of the form: 
 #    ('Ben Adida', 'ben@adida.net'),
@@ -146,7 +150,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
 ]
@@ -162,14 +165,17 @@ TEMPLATES = [
         'DIRS': [
             ROOT_PATH,
             os.path.join(ROOT_PATH, 'templates'),
-            # os.path.join(ROOT_PATH, 'helios/templates'),  # covered by APP_DIRS:True
-            # os.path.join(ROOT_PATH, 'helios_auth/templates'),  # covered by APP_DIRS:True
-            # os.path.join(ROOT_PATH, 'server_ui/templates'),  # covered by APP_DIRS:True
+            os.path.join(ROOT_PATH, 'helios/templates'),  # covered by APP_DIRS:True
+            os.path.join(ROOT_PATH, 'helios_auth/templates'),  # covered by APP_DIRS:True
+            os.path.join(ROOT_PATH, 'server_ui/templates'),  # covered by APP_DIRS:True
         ],
         'OPTIONS': {
             'debug': DEBUG,
             'context_processors': [
                 "django.contrib.auth.context_processors.auth",
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         }
