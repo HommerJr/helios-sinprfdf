@@ -46,21 +46,21 @@ def get_auth_url(request, redirect_url):
     tok = client.get_request_token()
   except:
     return None
-
+  
   request.session['request_token'] = tok
-  url = client.get_authenticate_url(tok['oauth_token'])
+  url = client.get_authenticate_url(tok['oauth_token']) 
   return url
-
+    
 def get_user_info_after_auth(request):
   tok = request.session['request_token']
   twitter_client = _get_client_by_token(tok)
   access_token = twitter_client.get_access_token()
   request.session['access_token'] = access_token
-
+    
   user_info = utils.from_json(twitter_client.oauth_request('http://api.twitter.com/1/account/verify_credentials.json', args={}, method='GET'))
-
+  
   return {'type': 'twitter', 'user_id' : user_info['screen_name'], 'name': user_info['name'], 'info': user_info, 'token': access_token}
-
+    
 
 def user_needs_intervention(user_id, user_info, token):
   """
@@ -76,7 +76,7 @@ def user_needs_intervention(user_id, user_info, token):
 def _get_client_by_request(request):
   access_token = request.session['access_token']
   return _get_client_by_token(access_token)
-
+  
 def update_status(user_id, user_info, token, message):
   """
   post a message to the auth system's update stream, e.g. twitter stream
@@ -102,12 +102,12 @@ def follow_view(request):
   if request.method == "GET":
     from helios_auth.view_utils import render_template
     from helios_auth.views import after
-
+    
     return render_template(request, 'twitter/follow', {'user_to_follow': USER_TO_FOLLOW, 'reason_to_follow' : REASON_TO_FOLLOW})
 
   if request.method == "POST":
     follow_p = bool(request.POST.get('follow_p',False))
-
+    
     if follow_p:
       from helios_auth.security import get_user
 

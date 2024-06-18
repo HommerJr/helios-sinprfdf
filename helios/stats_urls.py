@@ -3,7 +3,6 @@ Helios URLs for Election related stuff
 
 Ben Adida (ben@adida.net)
 """
-
 from django.urls import re_path
 
 from helios.stats_views import (home, force_queue, elections, recent_problem_elections, recent_votes)

@@ -4,7 +4,6 @@ Authentication URLs
 
 Ben Adida (ben@adida.net)
 """
-
 from django.urls import re_path
 
 from settings import AUTH_ENABLED_SYSTEMS

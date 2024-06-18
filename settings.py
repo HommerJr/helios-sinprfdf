@@ -5,7 +5,6 @@ import sys
 import json
 import os
 from pathlib import Path
-
 import ldap
 from django_auth_ldap.config import LDAPSearch
 
@@ -261,8 +260,9 @@ HELIOS_PRIVATE_DEFAULT = False
 # AUTH_ENABLED_SYSTEMS = ['password','ldap','facebook','twitter','google','yahoo']
 AUTH_ENABLED_SYSTEMS = get_from_env('AUTH_ENABLED_SYSTEMS',
                                     get_from_env('AUTH_ENABLED_AUTH_SYSTEMS', 'password,google,ldap')).split(",")
-AUTH_DEFAULT_SYSTEM = get_from_env('AUTH_DEFAULT_SYSTEM',
+AUTH_DEFAULT_SYSTEM = get_from_env('AUTH_DEFAULT_SYSTEM', 
                                     get_from_env('AUTH_DEFAULT_AUTH_SYSTEM', 'google'))
+
 # google
 GOOGLE_CLIENT_ID = get_from_env('GOOGLE_CLIENT_ID', '')
 GOOGLE_CLIENT_SECRET = get_from_env('GOOGLE_CLIENT_SECRET', '')

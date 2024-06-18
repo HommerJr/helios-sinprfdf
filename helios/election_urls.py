@@ -3,7 +3,6 @@ Helios URLs for Election related stuff
 
 Ben Adida (ben@adida.net)
 """
-
 from django.urls import re_path
 
 from helios import views
@@ -15,7 +14,7 @@ urlpatterns = [
 
     # metadata that need not be verified
     re_path(r'^/meta$', views.one_election_meta, name=names.ELECTION_META),
-
+    
     # edit election params
     re_path(r'^/edit$', views.one_election_edit, name=names.ELECTION_EDIT),
     re_path(r'^/schedule$', views.one_election_schedule, name=names.ELECTION_SCHEDULE),
@@ -32,7 +31,7 @@ urlpatterns = [
     re_path(r'^/trustees/new$', views.new_trustee, name=names.ELECTION_TRUSTEES_NEW),
     re_path(r'^/trustees/add-helios$', views.new_trustee_helios, name=names.ELECTION_TRUSTEES_ADD_HELIOS),
     re_path(r'^/trustees/delete$', views.delete_trustee, name=names.ELECTION_TRUSTEES_DELETE),
-
+    
     # trustee pages
     re_path(r'^/trustees/(?P<trustee_uuid>[^/]+)/home$',
         views.trustee_home, name=names.ELECTION_TRUSTEE_HOME),
@@ -48,7 +47,7 @@ urlpatterns = [
         views.trustee_decrypt_and_prove, name=names.ELECTION_TRUSTEE_DECRYPT_AND_PROVE),
     re_path(r'^/trustees/(?P<trustee_uuid>[^/]+)/upload-decryption$',
         views.trustee_upload_decryption, name=names.ELECTION_TRUSTEE_UPLOAD_DECRYPTION),
-
+    
     # election voting-process actions
     re_path(r'^/view$', views.one_election_view, name=names.ELECTION_VIEW),
     re_path(r'^/result$', views.one_election_result, name=names.ELECTION_RESULT),
@@ -69,21 +68,21 @@ urlpatterns = [
     re_path(r'^/save_questions$', views.one_election_save_questions, name=names.ELECTION_SAVE_QUESTIONS),
     re_path(r'^/register$', views.one_election_register, name=names.ELECTION_REGISTER),
     re_path(r'^/freeze$', views.one_election_freeze, name=names.ELECTION_FREEZE), # includes freeze_2 as POST target
-
+    
     # computing tally
     re_path(r'^/compute_tally$', views.one_election_compute_tally, name=names.ELECTION_COMPUTE_TALLY),
     re_path(r'^/combine_decryptions$', views.combine_decryptions, name=names.ELECTION_COMBINE_DECRYPTIONS),
     re_path(r'^/release_result$', views.release_result, name=names.ELECTION_RELEASE_RESULT),
-
+    
     # casting a ballot before we know who the voter is
     re_path(r'^/cast$', views.one_election_cast, name=names.ELECTION_CAST),
     re_path(r'^/cast_confirm$', views.one_election_cast_confirm, name=names.ELECTION_CAST_CONFIRM),
     re_path(r'^/password_voter_login$', views.password_voter_login, name=names.ELECTION_PASSWORD_VOTER_LOGIN),
     re_path(r'^/cast_done$', views.one_election_cast_done, name=names.ELECTION_CAST_DONE),
-
+    
     # post audited ballot
     re_path(r'^/post-audited-ballot', views.post_audited_ballot, name=names.ELECTION_POST_AUDITED_BALLOT),
-
+    
     # managing voters
     re_path(r'^/voters/$', views.voter_list, name=names.ELECTION_VOTERS_LIST),
     re_path(r'^/voters/upload$', views.voters_upload, name=names.ELECTION_VOTERS_UPLOAD),
@@ -93,7 +92,7 @@ urlpatterns = [
     re_path(r'^/voters/email$', views.voters_email, name=names.ELECTION_VOTERS_EMAIL),
     re_path(r'^/voters/(?P<voter_uuid>[^/]+)$', views.one_voter, name=names.ELECTION_VOTER),
     re_path(r'^/voters/(?P<voter_uuid>[^/]+)/delete$', views.voter_delete, name=names.ELECTION_VOTER_DELETE),
-
+    
     # ballots
     re_path(r'^/ballots/$', views.ballot_list, name=names.ELECTION_BALLOTS_LIST),
     re_path(r'^/ballots/(?P<voter_uuid>[^/]+)/all$', views.voter_votes, name=names.ELECTION_BALLOTS_VOTER),
