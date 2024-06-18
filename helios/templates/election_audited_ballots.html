@@ -26,10 +26,10 @@ Votos auditados {{offset_plus_one}} - {{offset_plus_limit}} &nbsp;&nbsp;
 <a href="?after={{next_after}}&offset={{offset_plus_limit}}">próximo {{limit}}</a> &nbsp;&nbsp;
 {% endif %}
 
-{% ifequal offset 0 %}
+{% if offset == 0 %}
 {% else %}
 <a href="?">de volta ao início</a> &nbsp;&nbsp;
-{% endifequal %}
+{% endif %}
 {% if more_p %}
 <a href="?after={{next_after}}&offset={{next_offset}}">próximo {{limit}}</a>
 {% endif %}

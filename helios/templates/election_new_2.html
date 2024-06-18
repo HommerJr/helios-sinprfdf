@@ -6,11 +6,11 @@
 var SECRET_KEY;
 
 function before_create() {
-{% ifequal election_type "one" %}
+{% if election_type == "one" %}
     return confirm('Você copiou a chave privada para um local seguro?\n\nDepois de clicar em OK, o Helios não poderá recuperar a chave secreta sem a sua ajuda!');
 {% else %}
     return true;
-{% endifequal %}
+{% endif %}
 }
 
 function generate_keypair() {
@@ -26,14 +26,14 @@ function generate_keypair() {
 
     $('#pk').val(jQuery.toJSON(SECRET_KEY.pk));
     
-{% ifequal election_type "one" %}
+{% if election_type == "one" %}
     $('#sk_textarea').val(jQuery.toJSON(SECRET_KEY));
     $('#sk_form').show();
 {% else %}
-{% ifequal election_type "helios" %}
+{% if election_type == "helios" %}
     $('#sk').val(jQuery.toJSON(SECRET_KEY));
-{% endifequal %}
-{% endifequal %}
+{% endif %}
+{% endif %}
 
     $('#submit').show();
 }
@@ -47,15 +47,15 @@ $(document).ready(function() {
 </script>
 
   <h2 class="title">Criar uma Nova Eleição: {{name}}</h2>
-{% ifequal election_type "helios" %}
+{% if election_type == "helios" %}
   <b>Uma eleição gerenciada pelo Helios</b>.
 {% else %}
-{% ifequal election_type "one" %}
+{% if election_type == "one" %}
   <b>Uma eleição gerenciada por você, o único administrador</b>.
 {% else %}
 <b>Uma eleição gerenciada por múltiplos apuradores</b>.
-{% endifequal %}
-{% endifequal %}
+{% endif %}
+{% endif %}
   <form class="prettyform" action="{% url "helios.views.election_new_3" %}" method="POST" id="create_election_form" onsubmit="return before_create();">
       <input type="hidden" name="csrf_token" value="{{csrf_token}}" />
       <input type="hidden" name="name" value="{{name}}" />
@@ -78,7 +78,7 @@ $(document).ready(function() {
 <label for="">&nbsp;</label>  <input type="submit" value="criar" id="submit" />
   </form>
   <br /><br />
-{% ifequal election_type "one" %}
+{% if election_type == "one" %}
   <form style="padding-left: 200px;" id="sk_form" onsubmit="return false;">
       <input type="hidden" name="csrf_token" value="{{csrf_token}}" />
       Sua Chave Privada Secreta da Eleição:<br />
@@ -88,5 +88,5 @@ $(document).ready(function() {
       (Você precisa copiar e colar esta chave e mantê-la em segurança,<br />
       do contrário, você não vai conseguir apurar a sua eleição.)
   </form>
-{% endifequal %}
+{% endif %}
 {% endblock %}
