@@ -22,5 +22,5 @@ urlpatterns = [
 
     url(r'^', include('server_ui.urls')),
 
-    url(r'^app-django-admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
 ]

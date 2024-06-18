@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:9.6
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PWD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - helios-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - helios-network
+
+  web:
+    build: .
+    env_file: .env
+    command: gunicorn --certfile=/etc/ssl/certs/selfsigned.crt --keyfile=/etc/ssl/private/selfsigned.key --bind 0.0.0.0:8000 helios.wsgi:application
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - helios-network
+
+  celeryworker:
+    build: .
+    command: /app/celery_start.sh
+    env_file: .env
+    depends_on:
+      - web
+      - rabbitmq
+    networks:
+      - helios-network
+    user: celeryuser
+
+volumes:
+  postgres_data:
+
+networks:
+  helios-network:
