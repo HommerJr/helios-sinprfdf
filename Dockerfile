@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.6
+FROM python:3.8-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -9,17 +9,20 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
 # Install dependencies
-COPY requirements.txt /app/
 RUN apt-get update && apt-get install -y \
+    gcc \
     libpq-dev \
     libsasl2-dev \
     libldap2-dev \
     libssl-dev \
     openssl \
+    gettext \
+    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 # Create celeryuser
 RUN useradd -ms /bin/bash celeryuser
 
+COPY requirements.txt /app/
 # Install pip dependencies
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt gunicorn
