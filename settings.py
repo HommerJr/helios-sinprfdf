@@ -52,17 +52,15 @@ ALLOWED_HOSTS = get_from_env('ALLOWED_HOSTS', 'localhost').split(",")
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
-
     'django.contrib.messages',
-    'django.contrib.admin',
     'django.contrib.staticfiles',
 
-    'anymail',
     ## HELIOS stuff
+    'anymail',
     'helios_auth',
     'helios',
     'server_ui',
@@ -163,6 +161,7 @@ USE_I18N = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
 
+
 ]
 STATIC_ROOT = BASE_DIR / 'static'
 
@@ -181,12 +180,6 @@ if get_from_env('DATABASE_URL', None):
 DATE_FORMAT = 'd/m/Y'  # Formato de data: dia/mês/ano
 TIME_FORMAT = 'H:i'  # Formato de hora: 24 horas
 DATETIME_FORMAT = 'd/m/Y H:i'  # Formato de data e hora
-
-STATIC_URL = '/media/'
-
-STATIC_ROOT = os.path.join('/')
-MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media/')
-STATIC_URL = os.path.join(STATIC_ROOT, 'static/')
 
 # set up celery
 CELERY_BROKER_URL = get_from_env('CELERY_BROKER_URL', 'amqp://localhost')
@@ -288,7 +281,7 @@ SECURE_URL_HOST = get_from_env("SECURE_URL_HOST", URL_HOST).rstrip("/")
 
 # election stuff
 SITE_TITLE = get_from_env('SITE_TITLE', 'Plataforma de Eleições Helios')
-MAIN_LOGO_URL = get_from_env('MAIN_LOGO_URL', '/static/logo.png')
+MAIN_LOGO_URL = get_from_env('MAIN_LOGO_URL', '/static/server_ui/logo.png')
 ALLOW_ELECTION_INFO_URL = (get_from_env('ALLOW_ELECTION_INFO_URL', '0') == '1')
 
 # FOOTER links
