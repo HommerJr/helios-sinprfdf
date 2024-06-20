@@ -42,7 +42,7 @@ def prepare_vars(request, values):
 def render_template(request, template_name, values=None):
   vars_with_user = prepare_vars(request, values or {})
 
-  return render(request, 'helios_auth/templates/%s.html' % template_name, vars_with_user)
+  return render(request, 'helios_auth/templates/helios_auth/%s.html' % template_name, vars_with_user)
 
 
 def render_template_raw(request, template_name, values=None):

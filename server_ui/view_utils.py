@@ -23,5 +23,5 @@ def render_template(request, template_name, values = None):
   if 'csrf_token' in request.session:
     vars_with_user['csrf_token'] = request.session['csrf_token']
   
-  return render(request, 'server_ui/templates/%s.html' % template_name, vars_with_user)
+  return render(request, 'server_ui/templates/server_ui/%s.html' % template_name, vars_with_user)
   

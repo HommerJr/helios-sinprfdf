@@ -5,7 +5,7 @@ from .celery_app import app as celery_app
 
 __all__ = ('celery_app', 'TEMPLATE_BASE', 'ADMIN_ONLY', 'VOTERS_UPLOAD', 'VOTERS_EMAIL',)
 
-TEMPLATE_BASE = settings.HELIOS_TEMPLATE_BASE or "helios/templates/base.html"
+TEMPLATE_BASE = settings.HELIOS_TEMPLATE_BASE or "helios/templates/helios/base.html"
 
 # a setting to ensure that only admins can create an election
 ADMIN_ONLY = settings.HELIOS_ADMIN_ONLY

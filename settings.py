@@ -36,7 +36,7 @@ def get_from_env(var, default):
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -80,17 +80,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'urls'
 
-ROOT_PATH = os.path.dirname(__file__)
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            ROOT_PATH,
-            os.path.join(ROOT_PATH, 'templates'),
-            os.path.join(ROOT_PATH, 'helios/templates'),  # covered by APP_DIRS:True
-            os.path.join(ROOT_PATH, 'helios_auth/templates'),  # covered by APP_DIRS:True
-            os.path.join(ROOT_PATH, 'server_ui/templates'),  # covered by APP_DIRS:True
+            BASE_DIR,
+            BASE_DIR / 'templates',
+            BASE_DIR / 'helios' / 'templates' / 'helios',
+            BASE_DIR / 'helios_auth' / 'templates' / 'helios_auth',
+            BASE_DIR / 'server_ui' / 'templates' / 'server_ui',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -160,8 +158,7 @@ USE_I18N = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-
-
+    BASE_DIR / 'admin' / 'static'
 ]
 STATIC_ROOT = BASE_DIR / 'static'
 
@@ -293,8 +290,8 @@ WELCOME_MESSAGE = get_from_env('WELCOME_MESSAGE',
 
 HELP_EMAIL_ADDRESS = get_from_env('HELP_EMAIL_ADDRESS', 'help@heliosvoting.org')
 
-AUTH_TEMPLATE_BASE = "server_ui/templates/base.html"
-HELIOS_TEMPLATE_BASE = "server_ui/templates/base.html"
+AUTH_TEMPLATE_BASE = "server_ui/templates/server_ui/base.html"
+HELIOS_TEMPLATE_BASE = "server_ui/templates/server_ui/base.html"
 HELIOS_ADMIN_ONLY = False
 HELIOS_VOTERS_UPLOAD = True
 HELIOS_VOTERS_EMAIL = True

@@ -10,8 +10,8 @@ from helios.view_utils import render_template_raw
 def vote_cast_send_message(user, voter, election, cast_vote, **kwargs):
     ## FIXME: this doesn't work for voters that are not also users
     # prepare the message
-    subject_template = 'email/cast_vote_subject.txt'
-    body_template = 'email/cast_vote_body.txt'
+    subject_template = 'server_ui/email/cast_vote_subject.txt'
+    body_template = 'server_ui/email/cast_vote_body.txt'
 
     extra_vars = {
         'election': election,

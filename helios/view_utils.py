@@ -51,7 +51,7 @@ def render_template(request, template_name, values = None, include_user=True):
   if not include_user:
     del vars_with_user['user']
 
-  return render(request, 'helios/templates/%s.html' % template_name, vars_with_user)
+  return render(request, 'helios/templates/helios/%s.html' % template_name, vars_with_user)
 
 
 def render_template_raw(request, template_name, values=None):

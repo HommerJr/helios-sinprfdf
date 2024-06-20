@@ -51,13 +51,13 @@ Seu rastreador de voto é:<br>
 
 {% if voter %}
 
-{% include "_castconfirm_docast.html" %}
+{% include "helios/_castconfirm_docast.html" %}
 
 {% else %}
 
 {% if show_password %}
 {% with cast_ballot="1" %}
-{% include "_castconfirm_password.html" %}
+{% include "helios/_castconfirm_password.html" %}
 {% endwith %}
 
 {% else %}
