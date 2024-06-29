@@ -37,10 +37,11 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private
 COPY . /app/
 
 # Ensure reset.sh is executable
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x /app/celery_start.sh
 
 # Change ownership of the app directory to celeryuser
 RUN chown -R celeryuser:celeryuser /app
 
 # Run the entrypoint script
+RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]

@@ -279,6 +279,7 @@ SECURE_URL_HOST = get_from_env("SECURE_URL_HOST", URL_HOST).rstrip("/")
 # election stuff
 SITE_TITLE = get_from_env('SITE_TITLE', 'Plataforma de Eleições Helios')
 MAIN_LOGO_URL = get_from_env('MAIN_LOGO_URL', '/static/server_ui/logo.png')
+TINY_LOGO_URL = get_from_env('TINY_LOGO_URL', '/static/server_ui/tinylogo.png')
 ALLOW_ELECTION_INFO_URL = (get_from_env('ALLOW_ELECTION_INFO_URL', '0') == '1')
 
 # FOOTER links

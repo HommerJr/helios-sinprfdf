@@ -5,7 +5,7 @@
 __pycache__
 db.sqlite3
 media
-prod
+server_ui/static/server_ui/prod
 
 # Backup files #
 *.bak
