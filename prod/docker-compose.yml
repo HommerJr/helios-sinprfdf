@@ -1,0 +1,64 @@
+services:
+  db:
+    image: postgres:16
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PWD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - helios-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - helios-network
+
+  web:
+    build: ../
+    env_file: .env
+    command: gunicorn --certfile=/etc/ssl/certs/server.crt --keyfile=/etc/ssl/private/server.key --bind 0.0.0.0:8000 helios.wsgi:application
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - helios-network
+
+  celeryworker:
+    build: .
+    command: /app/celery_start.sh
+    env_file: .env
+    depends_on:
+      - web
+      - rabbitmq
+    networks:
+      - helios-network
+    user: helios
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./prod/certs:/etc/letsencrypt
+      - ./static:/app/static
+      - ./media:/app/media
+    depends_on:
+      - web
+    networks:
+      - helios-network
+
+volumes:
+  postgres_data:
+
+networks:
+  helios-network:
