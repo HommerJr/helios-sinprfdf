@@ -22,8 +22,8 @@ RUN apt-get update && apt-get install -y \
     gettext \
     libffi-dev \
     && rm -rf /var/lib/apt/lists/*
-# Create celeryuser
-RUN useradd -ms /bin/bash celeryuser
+# Create helios
+RUN useradd -ms /bin/bash helios
 
 # Install pip dependencies
 RUN pip install --upgrade pip
@@ -40,7 +40,7 @@ COPY . /app/
 RUN chmod +x /app/celery_start.sh
 
 # Change ownership of the app directory to celeryuser
-RUN chown -R celeryuser:celeryuser /app
+RUN chown -R helios:helios /app
 
 # Run the entrypoint script
 RUN chmod +x /app/entrypoint.sh
