@@ -49,6 +49,19 @@ services:
       - helios-network
     user: celeryuser
 
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./static:/usr/share/nginx/html/static
+    depends_on:
+      - web
+    networks:
+      - helios-network
+
 volumes:
   postgres_data:
 

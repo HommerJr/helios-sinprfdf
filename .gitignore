@@ -6,6 +6,7 @@ __pycache__
 db.sqlite3
 media
 server_ui/static/server_ui/prod
+prod
 
 # Backup files #
 *.bak
