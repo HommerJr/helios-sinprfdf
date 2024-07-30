@@ -10,7 +10,7 @@ from urllib.parse import urlencode
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
-import settings
+from helios import settings
 from helios_auth import DEFAULT_AUTH_SYSTEM, ENABLED_AUTH_SYSTEMS
 from helios_auth.security import get_user
 from helios_auth.url_names import AUTH_INDEX, AUTH_START, AUTH_AFTER, AUTH_WHY, AUTH_AFTER_INTERVENTION

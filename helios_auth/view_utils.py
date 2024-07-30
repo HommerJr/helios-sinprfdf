@@ -34,7 +34,7 @@ def prepare_vars(request, values):
   vars_with_user['MEDIA_URL'] = '/static/helios_auth/'
   vars_with_user['TEMPLATE_BASE'] = helios_auth.TEMPLATE_BASE
 
-  vars_with_user['settings'] = settings
+  vars_with_user['helios.settings'] = settings
 
   return vars_with_user
 

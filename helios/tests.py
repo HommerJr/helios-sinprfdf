@@ -152,7 +152,7 @@ class ElectionModelTests(TestCase):
     def test_facebook_eligibility(self):
         self.election.eligibility = [{'auth_system': 'facebook', 'constraint':[{'group': {'id': '123', 'name':'Fake Group'}}]}]
 
-        import settings
+        from helios import settings
         fb_enabled = 'facebook' in settings.AUTH_ENABLED_SYSTEMS
         if not fb_enabled:
             logging.error("'facebook' not enabled for auth, cannot its constraints.")

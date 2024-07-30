@@ -1,6 +1,10 @@
 # Use an official Python runtime as a parent image
 FROM python:3.10-slim
 
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
 # Set the working directory
 WORKDIR /app
 
@@ -14,24 +18,31 @@ RUN apt-get update && apt-get install -y \
     openssl \
     gettext \
     libffi-dev \
-    && apt-get clean \
+    netcat \
     && rm -rf /var/lib/apt/lists/*
 
+# Create a non-root user
+RUN useradd -ms /bin/bash helios
+
 # Install pip dependencies
-COPY ../requirements.txt /app/
+COPY requirements.txt /app/
 RUN pip install --upgrade pip \
     && pip install -r requirements.txt gunicorn
 
 # Copy the application code
 COPY . /app/
 
-# Change the ownership of the application files
-RUN chown -R helios:helios /app \
-    && chmod +x /app/celery_start.sh
+# Ensure entrypoint script is executable
+RUN chmod +x /app/entrypoint.sh
 
-# Switch to 'helios' user
+# Change ownership of the app directory to the non-root user
+RUN chown -R helios:helios /app
+
+# Switch to the non-root user
 USER helios
 
+# Expose port 8000
+EXPOSE 8000
+
 # Run the entrypoint script
-RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
