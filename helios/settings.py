@@ -78,6 +78,8 @@ MIDDLEWARE = [
     'helios.security.HSTSMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = get_from_env('CSRF_TRUSTED_ORIGINS', 'https://localhost').split(",")
+
 ROOT_URLCONF = 'helios.urls'
 
 TEMPLATES = [
