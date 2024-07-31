@@ -31,6 +31,7 @@ COPY requirements.txt /app/
 RUN pip install -r requirements.txt gunicorn
 
 # Create SSL certificate
+RUN mkdir -p /etc/ssl/certs /etc/ssl/private
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/selfsigned.key -out /etc/ssl/certs/selfsigned.crt -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=localhost"
 
 # Copy the application code
