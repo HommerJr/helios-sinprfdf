@@ -1,17 +1,16 @@
 {% extends TEMPLATE_BASE %}
 
 {% block content %}
-<h1>Autenticação</h1>
+    <h1>Autenticação - Ambiente de Administração da Eleição</h1>
+    {% if user %}
+        <p style="font-size: 1.4em;">
+            Você está logado como<br/><b>{{ user.user_id }}</b> via <b>{{ user.user_type }}</b>.
+        </p>
+        <p>
+            <a href="{% url "auth@logout" %}">logout</a>
+        </p>
 
-{% if user %}
-<p style="font-size: 1.4em;">
-    Você está logado como<br /><b>{{user.user_id}}</b> via <b>{{user.user_type}}</b>.
-</p>
-<p>
-    <a href="{% url "auth@logout" %}">logout</a>
-</p>
-
-{% else %}
-{% include "helios_auth/login_box.html" %}
-{% endif %}
+    {% else %}
+        {% include "helios_auth/login_box.html" %}
+    {% endif %}
 {% endblock %}

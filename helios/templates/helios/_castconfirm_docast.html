@@ -1,44 +1,47 @@
 {% if election.voting_has_started %}
-  {% if not election.voting_has_stopped %}
+    {% if not election.voting_has_stopped %}
 
-<div id="cast_form">
-<form id="cast_confirm_form" method="post" action="" onsubmit="show_waiting()">
-    <input type="hidden" name="csrf_token" value="{{csrf_token}}" />
-    
-{% if status_update_label %}
-<div class="round" style="background: #eee; padding: 10px; border: 1px dashed #888;">
-<input type="checkbox" name="status_update" value="1" checked /> {{status_update_label}}<br />
-<blockquote style="font-size: 1.3em;">
-"{{status_update_message}}"
-</blockquote>
-<input type="hidden" name="status_update_message" value="{{status_update_message}}" />
-</div>
-<br />
-{% endif %}
+        <div id="cast_form">
+            <form id="cast_confirm_form" method="post" action="" onsubmit="show_waiting()">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
 
-Você está logado como <u>{{voter.display_html_big|safe}}</u><br /><br />
+                {% if status_update_label %}
+                    <div class="round" style="background: #eee; padding: 10px; border: 1px dashed #888;">
+                        <input type="checkbox" name="status_update" value="1" checked/> {{ status_update_label }}<br/>
+                        <blockquote style="font-size: 1.3em;">
+                            "{{ status_update_message }}"
+                        </blockquote>
+                        <input type="hidden" name="status_update_message" value="{{ status_update_message }}"/>
+                    </div>
+                    <br/>
+                {% endif %}
 
-    <button type="submit" class="large">DEPOSITE este voto</button>
-    <span style="font-size:0.8em;"><br />Você pode votar quantas vezes quiser.<br />Apenas o último voto será considerado.</span>
-</form>
+                Você está logado como <u>{{ voter.display_html_big|safe }}</u><br/><br/>
 
-<p>
-    <button class="tiny" onclick="if (confirm('Tem certeza de que deseja cancelar esta cédula e NÃO depositá-la na urna?')) {document.location='{% url "election@view" election.uuid %}';}">cancelar</button><br />
-    <span style="font-size:0.8em;">Se você cancelar agora. seu voto <em>NÃO</em> será gravado.<br />
+                <button type="submit" class="large" style="background-color: rgb(0, 170, 0);">CONFIRMAR</button>
+            </form>
+
+            <p>
+                <button style="background-color: rgb(218, 120, 0);"
+                        onclick="if (confirm('Tem certeza de que deseja cancelar esta cédula e NÃO depositá-la na urna?')) {document.location='{% url "election@view" election.uuid %}';}">
+                    CANCELAR
+                </button>
+                <br/>
+                <span style="font-size:0.8em;">Se você cancelar agora. seu voto <em>NÃO</em> será gravado.<br/>
     Você pode, é claro, reiniciar o processo de votação.</span>
-</p>
+            </p>
 
-<!-- for now, for CSRF protection, no auto-submit just yet (benadida) -->
-<!-- <script>$('#cast_confirm_form').submit()</script> -->
+            <!-- for now, for CSRF protection, no auto-submit just yet (benadida) -->
+            <!-- <script>$('#cast_confirm_form').submit()</script> -->
 
-</div>
-  {% else %}
-<p style="font-size:1.4em;">
-  votação já encerrou.
-</p>
-  {% endif %}
+        </div>
+    {% else %}
+        <p style="font-size:1.4em;">
+            votação já encerrou.
+        </p>
+    {% endif %}
 {% else %}
-<p style="font-size:1.4em;">
-  votação ainda não começou.
-</p>
+    <p style="font-size:1.4em;">
+        votação ainda não começou.
+    </p>
 {% endif %}

@@ -2,26 +2,26 @@
 {% block title %}Confirmação de voto{% endblock %}
 
 {% block content %}
-<h1>{{election.name}} &mdash; Votação concluída com sucesso!</h1>
+    <h1>{{ election.name }} &mdash; Votação concluída com sucesso!</h1>
 
-{% if vote_hash %}
-<p>
-  Seu rastreador de voto é:<br />
-    <span style="font-size:1.4em; font-weight: bold; word-break: break-word;">  {{vote_hash}}</span>
-</p>
-<p>
-  Este rastreador de voto matematicamente garante que seu voto será considerado. Você pode verificar todos os rastreadores de votos em <a href="{% url "election@voters@list-pretty" election.uuid %}">lista de eleitores</a>, onde o seu próprio rastreador de voto deve aparecer em alguns minutos.
-</p>
-{% endif %}
+    {% if vote_hash %}
+        <p>
+            Seu rastreador de voto é:<br/>
+            <span style="font-size:1.4em; font-weight: bold; word-break: break-word;">  {{ vote_hash }}</span>
+        </p>
+        <p>
+            Este rastreador de voto matematicamente garante que seu voto será considerado.
+        </p>
+    {% endif %}
 
-{% if logout %}
-<p><b>Para sua seguranção, você foi desconectado.</b></p>
-<iframe width="0" height="0" border="0" frameborder="0" src="{% url "auth@logout" %}">
-</iframe>
-{% endif %}
+    {% if logout %}
+        <p><b>Para sua seguranção, você foi desconectado.</b></p>
+        <iframe width="0" height="0" border="0" frameborder="0" src="{% url "auth@logout" %}">
+        </iframe>
+    {% endif %}
 
-<p style="font-size: 1.4em;">
-[ <a href="{% url "election@view" election.uuid %}">retornar às informações da eleição</a> ]
-</p>
+    <p style="font-size: 1.4em;">
+        [ <a href="{% url "election@view" election.uuid %}">retornar às informações da eleição</a> ]
+    </p>
 
 {% endblock %}

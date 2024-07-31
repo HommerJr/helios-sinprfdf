@@ -2,49 +2,52 @@
 {% block title %}Confirm Vote{% endblock %}
 
 {% block content %}
-<script language="javascript">
-$(document).ready(function() {
-  $('#waiting_div').hide();
-});
+    <script language="javascript">
+        $(document).ready(function () {
+            $('#waiting_div').hide();
+        });
 
-function show_waiting() {
-  $('#cast_div').hide();
-  $('#waiting_div').show();
-}
-</script>
-<h1>Confirme seu voto</h1>
+        function show_waiting() {
+            $('#cast_div').hide();
+            $('#waiting_div').show();
+        }
+    </script>
+    <h1>Confirme seu voto</h1>
 
-{% if error %}
-<p style="color: red;">{{error}}</p>
-{% endif %}
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
 
-<h3>Sua votação</h3>
+    <h3>Sua votação</h3>
 
-<p style="font-size:1.6em;">
-    <tt>{{vote_fingerprint}}</tt>
-</p>
+    <p style="font-size:1.6em;">
+        <tt>{{ vote_fingerprint }}</tt>
+    </p>
 
-<div id="cast_div">
-<h3>Vote com suas credenciais</h3>
+    <div id="cast_div">
+        <h3>Vote com suas credenciais</h3>
 
-<form method="post" onsubmit="show_waiting();" action="">
-    <input type="hidden" name="csrf_token" value="{{csrf_token}}" />
+        <form method="post" onsubmit="show_waiting();" action="">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
 
-<table>
-{{form.as_table}}
-</table><br />
+            <table>
+                {{ form.as_table }}
+            </table>
+            <br/>
 
-    <input type="submit" value="deposite esse voto" /><br /><br />
-</form>
+            <input type="submit" value="CONFIRMAR"/><br/><br/>
+        </form>
 
-<p>
-    Esqueceu sua senha? <a href="{% url "auth@password@forgotten" %}?return_url={% url "election@cast-confirm" %}">Envie a senha</a>.<br />(não se preocupe, não esqueceremos seu voto).
-</p>
-</div>
+        <p>
+            Esqueceu sua senha? <a
+                href="{% url "auth@password@forgotten" %}?return_url={% url "election@cast-confirm" %}">Envie a
+            senha</a>.<br/>(não se preocupe, não esqueceremos seu voto).
+        </p>
+    </div>
 
-<div id="waiting_div" align="center">
-  Verificando e lançando seu voto<br />
-  <img src="/static/helios/loading.gif" />
-</div>
+    <div id="waiting_div" align="center">
+        Verificando e lançando seu voto<br/>
+        <img src="/static/helios/loading.gif"/>
+    </div>
 
 {% endblock %}

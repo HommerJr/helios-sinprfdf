@@ -2,104 +2,106 @@
 {% block title %}Confirmação de voto{% endblock %}
 
 {% block content %}
-<script language="javascript">
-$(document).ready(function() {
-  $('#waiting_div').hide();
-});
+    <script language="javascript">
+        $(document).ready(function () {
+            $('#waiting_div').hide();
+        });
 
-function show_waiting() {
-  $('#all_forms').hide();
-  $('#waiting_div').show();
-}
+        function show_waiting() {
+            $('#all_forms').hide();
+            $('#waiting_div').show();
+        }
 
-// FIXME: set this to false once it's clear how to set it back to true
-// so that it's not easy to forget to cast a ballot
-var ready_to_unload = true;
+        // FIXME: set this to false once it's clear how to set it back to true
+        // so that it's not easy to forget to cast a ballot
+        var ready_to_unload = true;
 
-window.onbeforeunload = function(evt) {
-  if (ready_to_unload)
-    return;
+        window.onbeforeunload = function (evt) {
+            if (ready_to_unload)
+                return;
 
-  if (typeof evt == 'undefined') {
-    evt = window.event;
-  }
-  
-  var message = "Você ainda não submeteu seu voto! Certifique-se de completar o processo de votação se quiser que seu voto seja considerado.";
+            if (typeof evt == 'undefined') {
+                evt = window.event;
+            }
 
-  if (evt) {
-    evt.returnValue = message;
-  }
-  
-  return message;
-};
+            var message = "Você ainda não submeteu seu voto! Certifique-se de completar o processo de votação se quiser que seu voto seja considerado.";
 
-</script>
-<h1>Não vá ainda!<br />Seu voto ainda não foi submetido.</h1>
+            if (evt) {
+                evt.returnValue = message;
+            }
 
-<div id="waiting_div">
-    Verificando e submetendo seu voto<br />
-    <img src="/static/helios/loading.gif" />
-</div>
+            return message;
+        };
 
-<div style="word-wrap: break-word; width: 90vw;">
-Seu rastreador de voto é:<br>
-<b>{{vote_fingerprint}}</b>
-<br><br>
-</div>
+    </script>
+    <h1>Atenção!<br/>Seu voto ainda não foi confirmado.</h1>
+    <div id="waiting_div">
+        Verificando e submetendo seu voto<br/>
+        <img src="/static/helios/loading.gif"/>
+    </div>
 
-<div id="all_forms">
+    <div style="word-wrap: break-word; width: 90vw;">
+        Seu rastreador de voto é:<br>
+        <b>{{ vote_fingerprint }}</b>
+        <br><br>
+    </div>
 
-{% if voter %}
+    <div id="all_forms">
 
-{% include "helios/_castconfirm_docast.html" %}
+        {% if voter %}
 
-{% else %}
+            {% include "helios/_castconfirm_docast.html" %}
 
-{% if show_password %}
-{% with cast_ballot="1" %}
-{% include "helios/_castconfirm_password.html" %}
-{% endwith %}
+        {% else %}
 
-{% else %}
+            {% if show_password %}
+                {% with cast_ballot="1" %}
+                    {% include "helios/_castconfirm_password.html" %}
+                {% endwith %}
 
-{% if user %}
-<h1>Desculpas!<h1>
-<b>Desculpas, você <em>
-  {% if election.openreg %}
-    <u>não é elegível</u></em> para participar desta eleição.
-  {% else %}
-    não está cadastrado</em> para esta eleição, e o cadastro está encerrado.
-  {% endif %}
-  </b><br /></p>
-<p>
-    [<a href="{% url "election@view" election.uuid %}">retornar para a página principal da eleição</a>]
-</p>
-{% else %}
-<p>
-{% if election.openreg %}
+            {% else %}
 
-  {% if election.eligibility %}
-  {% else %}
-   Esta eleição é aberta para <em>qualquer um</em>, faça o login com sua conta de preferência.
-  {% endif %}
+                {% if user %}
+                    <h1>Desculpas!
+                    <h1>
+                    <b>Desculpas, você <em>
+                        {% if election.openreg %}
+                            <u>não é elegível</u></em> para participar desta eleição.
+                        {% else %}
+                            não está cadastrado</em> para esta eleição, e o cadastro está encerrado.
+                        {% endif %}
+                    </b><br/></p>
+                    <p>
+                        [<a href="{% url "election@view" election.uuid %}">retornar para a página principal da
+                        eleição</a>]
+                    </p>
+                {% else %}
+                    <p>
+                        {% if election.openreg %}
 
-{% else %}
-  Esta eleição é aberta apenas para <em>eleitores registrados</em>,
-  faça o login com a mesma conta com a qual foi registrado.
-{% endif %}
-</p>
+                            {% if election.eligibility %}
+                            {% else %}
+                                Esta eleição é aberta para <em>qualquer um</em>, faça o login com sua conta de
+                                preferência.
+                            {% endif %}
 
-{{login_box|safe}}
+                        {% else %}
+                            Esta eleição é aberta apenas para <em>eleitores registrados</em>,
+                            faça o login com a mesma conta com a qual foi registrado.
+                        {% endif %}
+                    </p>
 
-<br />
-Não se preocupa, lembraremos o seu voto enquanto você faz o login.
-{% endif %}
+                    {{ login_box|safe }}
 
-{% endif %}
-</p>
-{# this closes the IF ELSE of this being password_only #}
-{% endif %}
+                    <br/>
+                    Não se preocupe, lembraremos o seu voto enquanto você faz o login.
+                {% endif %}
 
-</div>
+            {% endif %}
+            </p>
+            {# this closes the IF ELSE of this being password_only #}
+        {% endif %}
+
+    </div>
 
 {% endblock %}

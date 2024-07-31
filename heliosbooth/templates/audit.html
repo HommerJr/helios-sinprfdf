@@ -1,29 +1,37 @@
-
 <h3>Sua Cédula Auditada</h3>
 
 <p>
-<b><u>IMPORTANTE</u></b>: essa cédula auditada <em>será descartada</em>.<br />
-Para depositar uma cédula efetivamente, você deve clicar em "Voltar para a votação", clicar em "Próximo passo" para confirmar sua escolha e, finalmente, em "DEPOSITE este voto" para concluir a votação.
+    <b><u>IMPORTANTE</u></b>: essa cédula auditada <em>será descartada</em>.<br/>
+    Para depositar uma cédula efetivamente, você deve clicar em "Voltar para a votação", clicar em "Próximo passo" para
+    confirmar sua escolha e, finalmente, em "CONFIRMAR" para concluir a votação.
 </p>
 
 <p>
-<b>Por que?</b> O Helios não permite o depósito da cédula auditada para mitigar coerção no momento do voto.
+    <b>Por que?</b> O Helios não permite o depósito da cédula auditada para mitigar coerção no momento do voto.
 </p>
 
 <p>
-<b>Como auditar?</b> <a onclick="$('#audit_trail').select(); return false;" href="#">Selecione e copie a informação de auditoria da sua cédula abaixo</a>, clique em <a target="_blank" href="single-ballot-verify.html?election_url={$T.election_url}">verificar cédula</a> e você será redirecionado para a tela de auditoria, onde deverá colar o conteúdo copiado.<br />
+    <b>Como auditar?</b> <a onclick="$('#audit_trail').select(); return false;" href="#">Selecione e copie a informação
+    de auditoria da sua cédula abaixo</a>, clique em <a target="_blank"
+                                                        href="single-ballot-verify.html?election_url={$T.election_url}">verificar
+    cédula</a> e você será redirecionado para a tela de auditoria, onde deverá colar o conteúdo copiado.<br/>
 </p>
 
 <form action="#">
 <textarea name="audit_trail" id="audit_trail" cols="80" rows="10" wrap="soft">
 {$T.audit_trail}
 </textarea>
-<br /><br />
-Caso deseje publicizar esta cédula auditada no Centro de Rastreamento do Helios, clique em "Publicizar cédula auditada".
-<br /><br />
-<button onclick="BOOTH.reset_ciphertexts();BOOTH.seal_ballot(); return false;" class="pretty">Voltar para a votação</button>
-&nbsp; &nbsp;&nbsp;
-<button onclick="$(this).attr('disabled', 'disabled');BOOTH.post_audited_ballot(); return false;" id="post_audited_ballot_button" class="pretty" style="font-size:0.8em;">Publicizar cédula auditada</button>
+    <br/><br/>
+    Caso deseje publicizar esta cédula auditada no Centro de Rastreamento do Helios, clique em "Publicizar cédula
+    auditada".
+    <br/><br/>
+    <button onclick="BOOTH.reset_ciphertexts();BOOTH.seal_ballot(); return false;" class="pretty">Voltar para a
+        votação
+    </button>
+    &nbsp; &nbsp;&nbsp;
+    <button onclick="$(this).attr('disabled', 'disabled');BOOTH.post_audited_ballot(); return false;"
+            id="post_audited_ballot_button" class="pretty" style="font-size:0.8em;">Publicizar cédula auditada
+    </button>
 
 </form>
 

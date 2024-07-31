@@ -2,7 +2,7 @@ Caro(a) {{voter.name}},
 
 Você votou com sucesso em {{election.name}}.
 
-Seu rastreador de votação é:
+Seu rastreador do voto é:
 {{cast_vote.vote_hash}}
 
 E sua cédula criptografada completa está arquivada em:
@@ -13,5 +13,7 @@ Esta eleição usa pseudônimos de eleitor para proteger sua privacidade.
 Seu pseudônimo de eleitor é:{{voter.alias}}.
 {% endif %}
 
+Você pode votar quantas vezes quiser. Apenas o último voto será considerado.
+
 --
-Helios
+Sistema de votação do SINPRF-DF

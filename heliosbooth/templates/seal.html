@@ -1,53 +1,56 @@
-<h3>Revise sua Votação</h3>
+<h3>Revise seu Voto</h3>
 
 <div style="padding: 10px; margin-bottom: 10px; background-color: #eee; border: 1px #ddd solid;">
-{#foreach $T.questions as question}
+    {#foreach $T.questions as question}
 
-Questão #{$T.question$index + 1}: {$T.question.short_name}<br>
-{#if $T.choices[$T.question$index].length == 0}
-<div style="margin-left: 15px;">&#x2610; <b><i>Nenhuma escolha selecionada</i></b></div>
-{#/if}
-{#foreach $T.choices[$T.question$index] as choice}
-<div style="margin-left: 15px;">&#x2713; <b>{$T.choice}</b></div>
-{#/for}
-{#if $T.choices[$T.question$index].length < $T.question.max}
-[{$T.choices[$T.question$index].length} seleções fora das possíveis {$T.question.min}-{$T.question.max}]<br />
-{#/if}
-[<a onclick="BOOTH.show_question({$T.question$index}); return false;" href="#">alterar</a>]
-{#if !$T.question$last}<br><br>{#/if}
-{#/for}
+    Questão #{$T.question$index + 1}: {$T.question.short_name}<br>
+    {#if $T.choices[$T.question$index].length == 0}
+    <div style="margin-left: 15px;">&#x2610; <b><i>Nenhuma escolha selecionada</i></b></div>
+    {#/if}
+    {#foreach $T.choices[$T.question$index] as choice}
+    <div style="margin-left: 15px;">&#x2713; <b>{$T.choice}</b></div>
+    {#/for}
+    {#if $T.choices[$T.question$index].length < $T.question.max}
+    [{$T.choices[$T.question$index].length} seleções fora das possíveis {$T.question.min}-{$T.question.max}]<br/>
+    {#/if}
+    [<a onclick="BOOTH.show_question({$T.question$index}); return false;" href="#">alterar</a>]
+    {#if !$T.question$last}<br><br>{#/if}
+    {#/for}
 </div>
 
 <p>Seu rastreador de votação é <b><tt style="font-size: 1.5em; word-break: break-all;">{$T.encrypted_vote_hash}</tt></b>.
 
-<p>  
-  <button id="proceed_button" onclick="BOOTH.cast_ballot();">Próximo passo</button><span id="loading_div"><img src="loading.gif" id="proceed_loading_img" /></span><br />
+<p>
+    <button id="proceed_button" onclick="BOOTH.cast_ballot();">Próximo passo</button>
+    <span id="loading_div"><img src="loading.gif" id="proceed_loading_img"/></span><br/>
 </p>
 
 
 <form method="POST" action="{$T.cast_url}" id="send_ballot_form" class="prettyform">
-<input type="hidden" name="election_uuid" value="{$T.election_uuid}" />
-<input type="hidden" name="election_hash" value="{$T.election_hash}" />
-<textarea name="encrypted_vote" style="display: none;">
+    <input type="hidden" name="election_uuid" value="{$T.election_uuid}"/>
+    <input type="hidden" name="election_hash" value="{$T.election_hash}"/>
+    <textarea name="encrypted_vote" style="display: none;">
 {$T.encrypted_vote_json}
 </textarea>
 </form>
 
 {#if $T.election_metadata.use_advanced_audit_features}
 <div style="background: lightyellow; padding: 10px; border: 1px solid #ddd; max-width: 340px;">
-<h4 style="padding: 0px; margin:0px;"><a onclick="$('#auditbody').slideToggle(250);" href="#">Interromper & Auditar</a> <span style="font-size: 0.8em; color: #444">[opcional]</span></h4>
-<div id="auditbody" style="display:none;">
-<p>
-  Se preferir, você pode interromper este voto e auditar a criptografia da sua cédula. Trata-se de um processo opcional.
-</p>
-<p>
-  Você será orientado a revisar novamente seu voto para o depósito da cédula na urna.
-</p>
-<button onclick="BOOTH.audit_ballot();" class="pretty">Iniciar auditoria</button>
-</p>
-</div>
+    <h4 style="padding: 0px; margin:0px;"><a onclick="$('#auditbody').slideToggle(250);" href="#">Interromper &
+        Auditar</a> <span style="font-size: 0.8em; color: #444">[opcional]</span></h4>
+    <div id="auditbody" style="display:none;">
+        <p>
+            Se preferir, você pode interromper este voto e auditar a criptografia da sua cédula. Trata-se de um processo
+            opcional.
+        </p>
+        <p>
+            Você será orientado a revisar novamente seu voto para o depósito da cédula na urna.
+        </p>
+        <button onclick="BOOTH.audit_ballot();" class="pretty">Iniciar auditoria</button>
+        </p>
+    </div>
 </div>
 {#/if}
 
-<br />
+<br/>
 
