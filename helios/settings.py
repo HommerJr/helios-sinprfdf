@@ -78,7 +78,7 @@ MIDDLEWARE = [
     'helios.security.HSTSMiddleware',
 ]
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'helios.urls'
 
 TEMPLATES = [
     {
@@ -157,6 +157,7 @@ USE_I18N = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
 STATICFILES_DIRS = [
     BASE_DIR / 'admin' / 'static'
 ]
