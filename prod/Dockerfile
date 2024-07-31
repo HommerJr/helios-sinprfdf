@@ -2,11 +2,14 @@
 FROM python:3.10-slim
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # Set the working directory
 WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt /app/
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -18,31 +21,28 @@ RUN apt-get update && apt-get install -y \
     openssl \
     gettext \
     libffi-dev \
-    netcat \
     && rm -rf /var/lib/apt/lists/*
-
-# Create a non-root user
+# Create helios
 RUN useradd -ms /bin/bash helios
 
 # Install pip dependencies
+RUN pip install --upgrade pip
 COPY requirements.txt /app/
-RUN pip install --upgrade pip \
-    && pip install -r requirements.txt gunicorn
+RUN pip install -r requirements.txt gunicorn
+
+# Create SSL certificate
+RUN mkdir -p /etc/ssl/certs /etc/ssl/private
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/selfsigned.key -out /etc/ssl/certs/selfsigned.crt -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=localhost"
 
 # Copy the application code
 COPY . /app/
 
-# Ensure entrypoint script is executable
-RUN chmod +x /app/entrypoint.sh
+# Ensure reset.sh is executable
+RUN chmod +x /app/celery_start.sh
 
-# Change ownership of the app directory to the non-root user
+# Change ownership of the app directory to celeryuser
 RUN chown -R helios:helios /app
 
-# Switch to the non-root user
-USER helios
-
-# Expose port 8000
-EXPOSE 8000
-
 # Run the entrypoint script
+RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]
