@@ -39,9 +39,9 @@ function generate_keypair() {
 }
 
 $(document).ready(function() {
-{% ifnotequal election_type "multiple" %}
+    {% if election_type != "multiple" %}
     $('#submit').hide();
-{% endifnotequal %}
+{% endif %}
     $('#sk_form').hide();
 });
 </script>
@@ -62,8 +62,8 @@ $(document).ready(function() {
       <input type="hidden" name="public_key" id="pk" value="" />
       <input type="hidden" name="private_key" id="sk" value="" /><br />
 
-{% ifnotequal election_type "multiple" %}
-  <label for="generate_key">&nbsp;</label><button onclick="generate_keypair(); return false;" id="generate_button">Gerar Chaves da Eleição</button>
+      {% if election_type != "multiple" %}
+      <label for="generate_key">&nbsp;</label><button onclick="generate_keypair(); return false;" id="generate_button">Gerar Chaves da Eleição</button>
 {% else %}
 <div id="trustees">
 <h3>Apuradores (até 5)</h3>
@@ -73,7 +73,7 @@ $(document).ready(function() {
 <label for="">&nbsp;</label> <input type="text" name="trustee" /><br />
 <label for="">&nbsp;</label> <input type="text" name="trustee" /><br />
 </div>
-{% endifnotequal %}
+{% endif %}
 <br /><br />
 <label for="">&nbsp;</label>  <input type="submit" value="criar" id="submit" />
   </form>

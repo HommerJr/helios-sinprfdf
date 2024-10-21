@@ -4,20 +4,20 @@ Authentication URLs
 
 Ben Adida (ben@adida.net)
 """
-from django.urls import re_path
+from django.urls import path, re_path
 
 from helios.settings import AUTH_ENABLED_SYSTEMS
 from . import views, url_names
 
 urlpatterns = [
     # basic static stuff
-    re_path(r'^$', views.index, name=url_names.AUTH_INDEX),
-    re_path(r'^logout$', views.logout, name=url_names.AUTH_LOGOUT),
+    path('', views.index, name=url_names.AUTH_INDEX),
+    path('logout', views.logout, name=url_names.AUTH_LOGOUT),
     re_path(r'^start/(?P<system_name>.*)$', views.start, name=url_names.AUTH_START),
     # weird facebook constraint for trailing slash
-    re_path(r'^after/$', views.after, name=url_names.AUTH_AFTER),
-    re_path(r'^why$', views.perms_why, name=url_names.AUTH_WHY),
-    re_path(r'^after_intervention$', views.after_intervention, name=url_names.AUTH_AFTER_INTERVENTION),
+    path('after/', views.after, name=url_names.AUTH_AFTER),
+    path('why', views.perms_why, name=url_names.AUTH_WHY),
+    path('after_intervention', views.after_intervention, name=url_names.AUTH_AFTER_INTERVENTION),
 ]
 
 # password auth

@@ -2,6 +2,10 @@
 Helios Signals
 
 Effectively callbacks that other apps can wait and be notified about
+Named arguments for each signal:
+    election_created : "election"
+    vote_cast : "user", "voter", "election", "cast_vote"
+    election_tallied : "election"
 """
 
 import django.dispatch

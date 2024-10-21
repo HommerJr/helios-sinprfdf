@@ -112,7 +112,7 @@ WSGI_APPLICATION = 'helios.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': get_from_env('DB_NAME', 'helios'),
         'USER': get_from_env('DB_USER', 'helios'),
         'PASSWORD': get_from_env('DB_PWD', 'heliosteste'),
@@ -175,7 +175,7 @@ if get_from_env('DATABASE_URL', None):
     import dj_database_url
 
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=False)
-    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
+    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 
 DATE_FORMAT = 'd/m/Y'  # Formato de data: dia/mês/ano
 TIME_FORMAT = 'H:i'  # Formato de hora: 24 horas
