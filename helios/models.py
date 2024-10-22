@@ -14,6 +14,7 @@ import uuid
 import bleach
 from django.conf import settings
 from django.db import models, transaction
+from django.utils import timezone
 from validate_email import validate_email
 
 from helios import datatypes
@@ -370,7 +371,7 @@ class Election(HeliosModel):
         has voting begun? voting begins if the election is frozen, at the prescribed date or at the date that voting was forced to start
         """
         return self.frozen_at is not None and (self.voting_starts_at is None or (
-                    datetime.datetime.utcnow() >= (self.voting_started_at or self.voting_starts_at)))
+                timezone.now() >= (self.voting_started_at or self.voting_starts_at)))
 
     def voting_has_stopped(self):
         """
@@ -378,7 +379,7 @@ class Election(HeliosModel):
         or failing that the date voting was extended until, or failing that the date voting is scheduled to end at.
         """
         voting_end = self.voting_ended_at or self.voting_extended_until or self.voting_ends_at
-        return (voting_end is not None and datetime.datetime.utcnow() >= voting_end) or self.encrypted_tally
+        return (voting_end is not None and timezone.now() >= voting_end) or self.encrypted_tally
 
     @property
     def issues_before_freeze(self):
@@ -756,7 +757,7 @@ class VoterFile(models.Model):
             if not voter_type in AUTH_SYSTEMS:
                 raise Exception(
                     "tipo de eleitor inválido '%s' para o ID de eleitor '%s', os tipos de eleitor disponíveis são %s" % (
-                    voter_type, voter_id, ",".join(AUTH_SYSTEMS.keys())))
+                        voter_type, voter_id, ",".join(AUTH_SYSTEMS.keys())))
 
             # default to having email be the same as voter_id
             voter_email = voter_id

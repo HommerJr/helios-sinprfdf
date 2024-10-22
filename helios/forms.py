@@ -51,7 +51,7 @@ class ElectionForm(forms.Form):
       if value:
           local_tz = pytz.timezone('America/Sao_Paulo')
           local_dt = local_tz.localize(value)
-          return local_dt.astimezone(timezone.utc)
+          return local_dt.astimezone(pytz.utc)
       return value
 
   def clean_voting_starts_at(self):
